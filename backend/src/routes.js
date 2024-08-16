@@ -72,6 +72,7 @@ routes.put('/updResponsavel/:resId', ResponsaveisController.updResponsavel);
 routes.get('/diarios/:idObr', DiariosController.index);
 routes.post('/newdiario', DiariosController.create);
 routes.put('/updDiario/:idDia', DiariosController.updDiario);
+routes.get('/busDiarios/:idObr', DiariosController.busDiarios);
 
 routes.get('/atividades', AtividadesController.index);
 routes.post('/newatividade', AtividadesController.create);

@@ -7,15 +7,25 @@ module.exports = {
         let id = request.params.idObr;
 
         const diarios = await connection('obrDiario')
-        .where('diaId', id)
-
+        .where('diaObrId', id)
+        .orderBy('diaData', 'desc')
         .select('*');
     
         return response.json(diarios);
     },
 
+    async busDiarios (request, response) {
+        let id = request.params.idObr;
+
+        const diario = await connection('obrDiario')
+        .where('diaId', id)
+
+        .select('*');
+    
+        return response.json(diario);
+    },
+
     async create(request, response) {
-        //console.log(request.body);
         const {
             diaObrId, 
             diaData, 
