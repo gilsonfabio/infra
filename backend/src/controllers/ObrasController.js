@@ -23,23 +23,26 @@ module.exports = {
     async totObras (request, response) {
         let staObra = request.params.status;
 
+        console.log('Status Anterior:', request.params.status);
         console.log('Status:', staObra);
 
         if(staObra === "T" ) {
             const obra = await connection('obras')
             .count({ count: '*' })
+            .sum({totVlrObra:'obrVlrContrato'})
             const countObras = JSON.stringify(obra[0].count);
-            console.log(countObras)
+            const totObras = obra[0].totVlrObra;
 
-            return response.json(countObras);
+            return response.json({countObras, totObras});
         }else {
             const obra = await connection('obras')
             .where('obrStatus', staObra)
             .count({ count: '*' })
+            .sum({totVlrObra:'obrVlrContrato'})
             const countObras = JSON.stringify(obra[0].count);
-            console.log(countObras)
+            const totObras = obra[0].totVlrObra;
 
-            return response.json(countObras);
+            return response.json({countObras, totObras});
         }       
     },
 
@@ -53,12 +56,27 @@ module.exports = {
         return response.json(etapas);
     },
 
+    async searchEtapa (request, response) {
+        let obrId = request.params.idObr;
+        let etaId = request.params.idEta;
+        const etapa = await connection('obrEtapas')
+        .where('obrEtaIdObra', obrId)
+        .where('obrEtaId', etaId)
+        .select('*');
+    
+        console.log(etapa)
+        return response.json(etapa);
+    },
+
     async create(request, response) {
         //console.log(request.body);
 
         const {obrNome, obrDescricao, obrLogradouro, obrNumero, obrComplemento, obrBairro, obrCidade, obrUf, obrCep, obrSecretaria, obrContrato, obrUrlContrato, obrInicio, 
-            obrPreTermino, obrEntrega, obrVlrContrato, obrVlrAditivo, obrVlrTotal, obrVlrPago, obrMotCancela, obrResCancela, obrDatReinicio, obrTotEtapas} = request.body;
+            obrPreTermino, obrVlrContrato, obrVlrAditivo, obrVlrTotal, obrVlrPago} = request.body;
         let status = 'A';
+        let etapas = 0;
+        let urlContrato = "";
+        let vlrTotal = 0.00;
 
         const [obrId] = await connection('obras').insert({
             obrNome, 
@@ -72,19 +90,15 @@ module.exports = {
             obrCep, 
             obrSecretaria, 
             obrContrato,
-            obrUrlContrato, 
+            obrUrlContrato: urlContrato, 
             obrInicio, 
             obrPreTermino,
-            obrEntrega, 
             obrStatus: status, 
             obrVlrContrato, 
             obrVlrAditivo, 
-            obrVlrTotal, 
-            obrVlrPago, 
-            obrMotCancela, 
-            obrResCancela, 
-            obrDatReinicio,
-            obrTotEtapas
+            obrVlrTotal: vlrTotal, 
+            obrVlrPago: vlrTotal, 
+            obrTotEtapas: etapas
         });
            
         return response.json({obrId});

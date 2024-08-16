@@ -7,6 +7,10 @@ const UsersController = require('./controllers/UsersController');
 const ObrasController = require('./controllers/ObrasController');
 const SecretariasController = require('./controllers/SecretariasController');
 const ResponsaveisController = require('./controllers/ResponsaveisController');
+const DiariosController = require('./controllers/DiariosController');
+const CargosController = require('./controllers/CargosController');
+const AtividadesController = require('./controllers/AtividadesController');
+const EquipamentosController = require('./controllers/EquipamentosController');
 
 routes.get('/', (request, response) => {
     response.json({
@@ -55,6 +59,7 @@ routes.get('/totObras/:status', ObrasController.totObras);
 routes.get('/etapas/:idObr', ObrasController.etapas);
 routes.post('/newEtapa', ObrasController.createEtapa);
 routes.put('/updEtapa/:obrId/:etaId', ObrasController.updEtapas);
+routes.get('/searchEtapa/:idObr/:idEta', ObrasController.searchEtapa);
 
 routes.get('/secretarias', SecretariasController.index);
 routes.post('/newSecretaria', SecretariasController.create);
@@ -63,5 +68,21 @@ routes.put('/updSecretaria/:secId', SecretariasController.updSecretaria);
 routes.get('/responsaveis', ResponsaveisController.index);
 routes.post('/newResponsavel', ResponsaveisController.create);
 routes.put('/updResponsavel/:resId', ResponsaveisController.updResponsavel);
+
+routes.get('/diarios/:idObr', DiariosController.index);
+routes.post('/newdiario', DiariosController.create);
+routes.put('/updDiario/:idDia', DiariosController.updDiario);
+
+routes.get('/atividades', AtividadesController.index);
+routes.post('/newatividade', AtividadesController.create);
+routes.put('/updAtividade/:idAtv', AtividadesController.updAtividade);
+
+routes.get('/atividades', CargosController.index);
+routes.post('/newcargo', CargosController.create);
+routes.put('/updCargo/:idCar', CargosController.updCargo);
+
+routes.get('/equipamentos', EquipamentosController.index);
+routes.post('/newequipamento', EquipamentosController.create);
+routes.put('/updEquipamento/:idEqu', EquipamentosController.updEquipamento);
 
 module.exports = routes;

@@ -1,0 +1,218 @@
+const connection = require('../database/connection');
+require('dotenv/config');
+
+module.exports = {       
+    
+    async index (request, response) {
+        let id = request.params.idObr;
+
+        const diarios = await connection('obrDiario')
+        .where('diaId', id)
+
+        .select('*');
+    
+        return response.json(diarios);
+    },
+
+    async create(request, response) {
+        //console.log(request.body);
+        const {
+            diaObrId, 
+            diaData, 
+            diaHora, 
+            diaIniHorTrab, 
+            diaFinHorTrab, 
+            diaIniHorInter, 
+            diaFinHorInter, 
+            diaCndTmpManha, 
+            diaCndTmpTarde, 
+            diaObservacoes, 
+            diaComentarios, 
+            diaIdResDiario, 
+            diaIdFisDiario} = request.body;
+        
+        let status = 'A';
+
+        const [diaId] = await connection('obrDiario').insert({
+            diaObrId, 
+            diaData, 
+            diaHora, 
+            diaIniHorTrab, 
+            diaFinHorTrab, 
+            diaIniHorInter, 
+            diaFinHorInter, 
+            diaCndTmpManha, 
+            diaCndTmpTarde, 
+            diaObservacoes, 
+            diaComentarios, 
+            diaIdResDiario, 
+            diaIdFisDiario,
+            diaStatus: status
+        });
+           
+        return response.json({diaId});
+    },
+    
+    async updDiario(request, response) {
+        let id = request.params.IdDia;
+        const {
+            diaObrId, 
+            diaData, 
+            diaHora, 
+            diaIniHorTrab, 
+            diaFinHorTrab, 
+            diaIniHorInter, 
+            diaFinHorInter, 
+            diaCndTmpManha, 
+            diaCndTmpTarde, 
+            diaObservacoes, 
+            diaComentarios, 
+            diaIdResDiario, 
+            diaIdFisDiario} = request.body;
+        
+        const [diaId] = await connection('obrDiario')
+        .where('diaId', id)
+        .update({
+            diaObrId, 
+            diaData, 
+            diaHora, 
+            diaIniHorTrab, 
+            diaFinHorTrab, 
+            diaIniHorInter, 
+            diaFinHorInter, 
+            diaCndTmpManha, 
+            diaCndTmpTarde, 
+            diaObservacoes, 
+            diaComentarios, 
+            diaIdResDiario, 
+            diaIdFisDiario
+        });
+           
+        return response.json({diaId});
+    },   
+
+    // Atividades.....
+
+    async diaAtividades (request, response) {
+        let id = request.params.idDia;
+
+        const diaAtiv = await connection('diaAtividades')
+        .where('dtvId', id)
+
+        .select('*');
+    
+        return response.json(diaAtiv);
+    },
+
+    async diaAtiInsert (request, response) {
+        const {dtvDiaId, dtvAtvId, dtvAtvStatus} = request.body;
+
+        const [dtvId] = await connection('diaAtividades').insert({
+            dtvDiaId, 
+            dtvAtvId, 
+            dtvAtvStatus
+        });
+           
+        return response.json({dtvId});
+    },
+
+    async diaAtiUpdate (request, response) {
+        const {dtvDiaId, dtvAtvId, dtvAtvStatus} = request.body;
+
+        const [dtvId] = await connection('diaAtividades')
+        .where('dtvId', id)
+        .update({
+            dtvDiaId, 
+            dtvAtvId, 
+            dtvAtvStatus
+        });
+           
+        return response.json({dtvId});
+    },
+
+    //Equipamentos.....
+    //`deqId`, `deqDiaId`, `deqEquId`, `deqEquQtd`, `deqStatus`
+
+    async diaEquipamentos (request, response) {
+        let id = request.params.idDia;
+
+        const diaEquip = await connection('diaEquipamentos')
+        .where('deqId', id)
+
+        .select('*');
+    
+        return response.json(diaEquip);
+    },
+
+    async diaEquInsert (request, response) {
+        const {deqDiaId, deqEquId, deqEquQtd } = request.body;
+        let status = "A";
+
+        const [deqId] = await connection('diaEquipamentos').insert({
+            deqDiaId, 
+            deqEquId,
+            deqEquQtd, 
+            deqAtvStatus: status
+        });
+           
+        return response.json({dtvId});
+    },
+
+    async diaEquUpdate (request, response) {
+        const {deqDiaId, deqEquId, deqEquQtd, deqEquStatus} = request.body;
+
+        const [dtvId] = await connection('diaEquipamentos')
+        .where('deqId', id)
+        .update({
+            deqDiaId, 
+            deqEquId,
+            deqEquQtd, 
+            deqEquStatus
+        });
+           
+        return response.json({deqId});
+    },
+
+    // Colaboradores.....
+    //`dcbId`, `dcbDiaId`, `dcbColId`, `dcbColQtd`, `dcbStatus`
+
+    async diaColab (request, response) {
+        let id = request.params.idDia;
+
+        const diaColab = await connection('diaColab')
+        .where('dcbId', id)
+
+        .select('*');
+    
+        return response.json(diaColab);
+    },
+
+    async diaColInsert (request, response) {
+        const {dcbDiaId, dcbColId, dcbColQtd } = request.body;
+        let status = "A";
+
+        const [dcbId] = await connection('diaColab').insert({
+            dcbDiaId, 
+            dcbColId,
+            dcbColQtd, 
+            dcbStatus: status
+        });
+           
+        return response.json({dcbId});
+    },
+
+    async diaColUpdate (request, response) {
+        const {dcbDiaId, dcbColId, dcbColQtd, dcbStatus} = request.body;
+
+        const [dcbId] = await connection('diaColab')
+        .where('dcbId', id)
+        .update({
+            dcbDiaId, 
+            dcbColId,
+            dcbColQtd, 
+            dcbStatus
+        });
+           
+        return response.json({dcbId});
+    },
+};
