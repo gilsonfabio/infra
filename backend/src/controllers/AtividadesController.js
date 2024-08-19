@@ -10,6 +10,16 @@ module.exports = {
         return response.json(atividades);
     },
 
+    async searchAtividade (request, response) {
+        let id = request.params.idAtv;
+        
+        const atividade = await connection('obrAtividades')
+        .where('atvId', id )
+        .select('*');
+    
+        return response.json(atividade);
+    },
+
     async create(request, response) {
         //console.log(request.body);
 

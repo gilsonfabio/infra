@@ -14,8 +14,8 @@ module.exports = {
         return response.json(diarios);
     },
 
-    async busDiarios (request, response) {
-        let id = request.params.idObr;
+    async busDiario (request, response) {
+        let id = request.params.idDia;
 
         const diario = await connection('obrDiario')
         .where('diaId', id)
