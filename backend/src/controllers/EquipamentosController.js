@@ -10,6 +10,15 @@ module.exports = {
         return response.json(equipamentos);
     },
 
+    async searchEquipamento (request, response) {
+        let id = request.params.idEqu;
+        const equipamento = await connection('obrEquipamentos')
+        .where('equId', id)
+        .select('*');
+    
+        return response.json(equipamento);
+    },
+
     async create(request, response) {
         const {equDescricao } = request.body;
         let status = 'A';

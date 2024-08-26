@@ -78,13 +78,18 @@ routes.get('/atividades', AtividadesController.index);
 routes.post('/newatividade', AtividadesController.create);
 routes.put('/updAtividade/:idAtv', AtividadesController.updAtividade);
 routes.get('/searchAtividade/:idAtv', AtividadesController.searchAtividade);
+routes.get('/atvdiario/:idDia', DiariosController.diaAtividades);
 
-routes.get('/atividades', CargosController.index);
+routes.get('/cargos', CargosController.index);
 routes.post('/newcargo', CargosController.create);
 routes.put('/updCargo/:idCar', CargosController.updCargo);
+routes.get('/searchCargo/:idCrg', CargosController.searchCargo);
+routes.get('/pesdiario/:idDia', DiariosController.diaColab);
 
 routes.get('/equipamentos', EquipamentosController.index);
 routes.post('/newequipamento', EquipamentosController.create);
 routes.put('/updEquipamento/:idEqu', EquipamentosController.updEquipamento);
+routes.get('/searchEquipamento/:idEqu', EquipamentosController.searchEquipamento);
+routes.get('/equdiario/:idDia', DiariosController.diaEquipamentos);
 
 module.exports = routes;

@@ -107,9 +107,9 @@ module.exports = {
         let id = request.params.idDia;
 
         const diaAtiv = await connection('diaAtividades')
-        .where('dtvId', id)
-
-        .select('*');
+        .join('obrAtividades', 'atvId', 'diaAtividades.dtvAtvId')
+        .where('dtvDiaId', id)
+        .select(['diaAtividades.*', 'obrAtividades.atvDescricao']);
     
         return response.json(diaAtiv);
     },
@@ -147,8 +147,8 @@ module.exports = {
         let id = request.params.idDia;
 
         const diaEquip = await connection('diaEquipamentos')
-        .where('deqId', id)
-
+        .join('obrEquipamentos', 'equId', 'diaEquipamentos.deqEquId')
+        .where('deqDiaId', id)
         .select('*');
     
         return response.json(diaEquip);
@@ -190,9 +190,9 @@ module.exports = {
         let id = request.params.idDia;
 
         const diaColab = await connection('diaColab')
-        .where('dcbId', id)
-
-        .select('*');
+        .join('obrCargos', 'crgId', 'diaColab.dcbColId')
+        .where('dcbDiaId', id)
+        .select(['diaColab.*', 'obrCargos.crgDescricao']);
     
         return response.json(diaColab);
     },

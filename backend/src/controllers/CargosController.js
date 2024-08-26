@@ -10,6 +10,16 @@ module.exports = {
         return response.json(cargos);
     },
 
+    async searchCargo (request, response) {
+        let id = request.params.idCrg;
+        
+        const cargo = await connection('obrCargos')
+        .where('crgId', id)
+        .select('*');
+    
+        return response.json(cargo);
+    },
+
     async create(request, response) {
         //console.log(request.body);
 
