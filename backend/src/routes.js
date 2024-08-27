@@ -73,18 +73,21 @@ routes.get('/diarios/:idObr', DiariosController.index);
 routes.post('/newdiario', DiariosController.create);
 routes.put('/updDiario/:idDia', DiariosController.updDiario);
 routes.get('/busDiario/:idDia', DiariosController.busDiario);
+routes.post('/diaEquInsert', DiariosController.diaEquInsert);
 
 routes.get('/atividades', AtividadesController.index);
 routes.post('/newatividade', AtividadesController.create);
 routes.put('/updAtividade/:idAtv', AtividadesController.updAtividade);
 routes.get('/searchAtividade/:idAtv', AtividadesController.searchAtividade);
 routes.get('/atvdiario/:idDia', DiariosController.diaAtividades);
+routes.post('/diaAtiInsert', DiariosController.diaAtiInsert);
 
 routes.get('/cargos', CargosController.index);
 routes.post('/newcargo', CargosController.create);
 routes.put('/updCargo/:idCar', CargosController.updCargo);
 routes.get('/searchCargo/:idCrg', CargosController.searchCargo);
 routes.get('/pesdiario/:idDia', DiariosController.diaColab);
+routes.post('/diaColInsert', DiariosController.diaColInsert);
 
 routes.get('/equipamentos', EquipamentosController.index);
 routes.post('/newequipamento', EquipamentosController.create);

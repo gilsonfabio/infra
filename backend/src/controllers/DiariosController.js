@@ -18,9 +18,9 @@ module.exports = {
         let id = request.params.idDia;
 
         const diario = await connection('obrDiario')
+        .join('obras', 'obrId', 'obrDiario.diaObrId')
         .where('diaId', id)
-
-        .select('*');
+        .select(['obrDiario.*', 'obras.obrPreTermino']);
     
         return response.json(diario);
     },
@@ -165,7 +165,7 @@ module.exports = {
             deqAtvStatus: status
         });
            
-        return response.json({dtvId});
+        return response.json({deqId});
     },
 
     async diaEquUpdate (request, response) {
@@ -180,7 +180,7 @@ module.exports = {
             deqEquStatus
         });
            
-        return response.json({deqId});
+        return response.json({dtvId});
     },
 
     // Colaboradores.....
